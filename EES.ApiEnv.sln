@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EES.ComboBox", "EES.ComboBox.csproj", "{D8407669-D43D-47E9-8A5F-B81DC0606A89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EES.ComboBox", "EnvironmentEasySwitcher\EES.ComboBox.csproj", "{D8407669-D43D-47E9-8A5F-B81DC0606A89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EES.Core", "..\EES.Core\EES.Core.csproj", "{221111A9-6B92-4B4D-A276-15FE857F17A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EES.Core", "EES.Core\EES.Core.csproj", "{221111A9-6B92-4B4D-A276-15FE857F17A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AE", "AE", "{3A3F881A-2D7C-43D5-B189-D54C33F1719F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{221111A9-6B92-4B4D-A276-15FE857F17A3} = {3A3F881A-2D7C-43D5-B189-D54C33F1719F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {070C93DF-783F-466A-A5AD-5F6747D88662}
