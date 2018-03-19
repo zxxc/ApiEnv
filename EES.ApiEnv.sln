@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EES.ComboBox", "EES.ComboBox.csproj", "{D8407669-D43D-47E9-8A5F-B81DC0606A89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EES.Core", "..\EES.Core\EES.Core.csproj", "{221111A9-6B92-4B4D-A276-15FE857F17A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8407669-D43D-47E9-8A5F-B81DC0606A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{221111A9-6B92-4B4D-A276-15FE857F17A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{221111A9-6B92-4B4D-A276-15FE857F17A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{221111A9-6B92-4B4D-A276-15FE857F17A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{221111A9-6B92-4B4D-A276-15FE857F17A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {070C93DF-783F-466A-A5AD-5F6747D88662}
+	EndGlobalSection
+EndGlobal

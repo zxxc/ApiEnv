@@ -10,7 +10,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 using System;
 
-namespace Microsoft.Samples.VisualStudio.ComboBox
+namespace EES.ComboBox
 {
     static class GuidList
     {

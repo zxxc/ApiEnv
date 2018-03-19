@@ -8,7 +8,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 
 ***************************************************************************/
 
-namespace Microsoft.Samples.VisualStudio.ComboBox
+namespace EES.ComboBox
 {
     static class PkgCmdIDList
     {
