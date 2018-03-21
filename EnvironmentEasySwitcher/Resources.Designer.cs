@@ -241,29 +241,11 @@ namespace EES.ComboBox {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zoom to Fit.
-        /// </summary>
-        internal static string Zoom_to_Fit {
-            get {
-                return ResourceManager.GetString("Zoom_to_Fit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Zoom factor must be &gt; 0.
         /// </summary>
         internal static string ZoomMustBeGTZero {
             get {
                 return ResourceManager.GetString("ZoomMustBeGTZero", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ZoomToFit.
-        /// </summary>
-        internal static string ZoomToFit {
-            get {
-                return ResourceManager.GetString("ZoomToFit", resourceCulture);
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace EES.Core
+namespace EES.ComboBox.Services
 {
     public class PossibleValuesService
     {
@@ -15,7 +15,7 @@ namespace EES.Core
             List<string> dropDownComboChoices = new List<string>();
             if (string.IsNullOrWhiteSpace(slnFile))
             {
-                return Array.Empty<string>();
+                return new string[0];
             }
             string solutionDir = System.IO.Path.GetDirectoryName(slnFile);
             string[] files = Directory.GetFiles(solutionDir, "TestSettings.*.json", SearchOption.AllDirectories);

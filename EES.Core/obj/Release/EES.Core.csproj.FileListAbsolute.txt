@@ -1,6 +1,0 @@
-C:\dev\EES.Core\obj\Release\EES.Core.csprojResolveAssemblyReference.cache
-C:\dev\EES.Core\obj\Release\EES.Core.csproj.CoreCompileInputs.cache
-C:\dev\EES.Core\bin\Release\EES.Core.dll
-C:\dev\EES.Core\bin\Release\EES.Core.pdb
-C:\dev\EES.Core\obj\Release\EES.Core.dll
-C:\dev\EES.Core\obj\Release\EES.Core.pdb

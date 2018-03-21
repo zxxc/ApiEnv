@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace EES.Core
+namespace EES.ComboBox.Services
 {
     public class TestRunnersService
     {

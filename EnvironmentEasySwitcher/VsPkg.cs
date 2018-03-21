@@ -16,10 +16,11 @@ using System.ComponentModel.Design;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using EES.ComboBox.Services;
 using EnvDTE;
 using EnvDTE80;
-using EES.Core;
 
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "EES.ComboBox")]
 namespace EES.ComboBox
@@ -48,6 +49,7 @@ namespace EES.ComboBox
 
     // This attribute registers a tool window exposed by this package.
     [Guid(GuidList.guidComboBoxPkgString)]
+    [ProvideBindingPath()]
     public sealed class ComboBoxPackage : Package
     {
         /// <summary>
@@ -59,6 +61,7 @@ namespace EES.ComboBox
         /// </summary>
         public ComboBoxPackage()
         {
+            //var re = new ManualAssemblyResolver(Assembly.LoadFrom("EES.Core.dll"));
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -71,86 +74,35 @@ namespace EES.ComboBox
         /// </summary>
         protected override void Initialize()
         {
+            
             base.Initialize();
-
+            
             // Add our command handlers for menu (commands must be declared in the .vsct file)
             OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null != mcs)
+            if (null == mcs)
             {
-                // NOTE: For further explanantions of the various types of combos and their differences see the .vsct file where they are declared.
-                //
-                //   A DropDownCombo combobox requires two commands:
-                //     One command (cmdidMyCombo) is used to ask for the current value for the display area of the combo box 
-                //     and to set the new value when the user makes a choice in the combo box.
-                //
-                //     The second command (cmdidMyComboGetList) is used to retrieve the list of choices for the combo box drop
-                //     down area.
-                // 
-                // Normally IOleCommandTarget::QueryStatus is used to determine the state of a command, e.g.
-                // enable vs. disable, shown vs. hidden, etc. The QueryStatus method does not have enough
-                // flexibility for combos which need to be able to indicate a currently selected (displayed)
-                // item as well as provide a list of items for their dropdown area. In order to communicate 
-                // this information actually IOleCommandTarget::Exec is used with a non-NULL varOut parameter. 
-                // You can think of these Exec calls as extended QueryStatus calls. There are two pieces of 
-                // information needed for a combo, thus it takes two commands to retrieve this information. 
-                // The main command id for the command is used to retrieve the current value and the second 
-                // command is used to retrieve the full list of choices to be displayed as an array of strings.
-                CommandID menuMyDropDownComboCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyDropDownCombo);
-                OleMenuCommand menuMyDropDownComboCommand = new OleMenuCommand(new EventHandler(OnMenuMyDropDownCombo), menuMyDropDownComboCommandID);
-                mcs.AddCommand(menuMyDropDownComboCommand);
-
-                CommandID menuMyDropDownComboGetListCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyDropDownComboGetList);
-                MenuCommand menuMyDropDownComboGetListCommand = new OleMenuCommand(new EventHandler(OnMenuMyDropDownComboGetList), menuMyDropDownComboGetListCommandID);
-                mcs.AddCommand(menuMyDropDownComboGetListCommand);
-
-                //   An IndexCombo box requires two commands:
-                //     One command is used to ask for the current value of the combo box and to set the new value when the user
-                //     makes a choice in the combo box.
-                //
-                //     The second command is used to retrieve this list of choices for the combo box.
-                CommandID menuMyIndexComboCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyIndexCombo);
-                OleMenuCommand menuMyIndexComboCommand = new OleMenuCommand(new EventHandler(OnMenuMyIndexCombo), menuMyIndexComboCommandID);
-                mcs.AddCommand(menuMyIndexComboCommand);
-
-                CommandID menuMyIndexComboGetListCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyIndexComboGetList);
-                MenuCommand menuMyIndexComboGetListCommand = new OleMenuCommand(new EventHandler(OnMenuMyIndexComboGetList), menuMyIndexComboGetListCommandID);
-                mcs.AddCommand(menuMyIndexComboGetListCommand);
-
-                // MRUCombo
-                //   An MRU Combo box requires only one command:
-                //     One command is used to ask for the current value of the combo box and to set the new value when the user
-                //     makes a choice in the combo box.
-                //
-                //     The list of choices entered is automatically remembered by the IDE on a per-user/per-machine basis.
-                CommandID menuMyMRUComboCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyMRUCombo);
-                OleMenuCommand menuMyMRUComboCommand = new OleMenuCommand(new EventHandler(OnMenuMyMRUCombo), menuMyMRUComboCommandID);
-                mcs.AddCommand(menuMyMRUComboCommand);
-
-                //   A DynamicCombo combo box requires two commands:
-                //     One command is used to ask for the current value of the combo box and to set the new value when the user
-                //     makes a choice in the combo box.
-                //
-                //     The second command is used to retrieve this list of choices for the combo box.
-                CommandID menuMyDynamicComboCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyDynamicCombo);
-                OleMenuCommand menuMyDynamicComboCommand = new OleMenuCommand(new EventHandler(OnMenuMyDynamicCombo), menuMyDynamicComboCommandID);
-                mcs.AddCommand(menuMyDynamicComboCommand);
-
-                CommandID menuMyDynamicComboGetListCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyDynamicComboGetList);
-                MenuCommand menuMyDynamicComboGetListCommand = new OleMenuCommand(new EventHandler(OnMenuMyDynamicComboGetList), menuMyDynamicComboGetListCommandID);
-                mcs.AddCommand(menuMyDynamicComboGetListCommand);
+                return;
             }
+
+            CommandID menuMyDynamicComboCommandID = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyDynamicCombo);
+            OleMenuCommand menuMyDynamicComboCommand = new OleMenuCommand(new EventHandler(OnMenuMyDynamicCombo), menuMyDynamicComboCommandID);
+            mcs.AddCommand(menuMyDynamicComboCommand);
+
+            CommandID menuMyDynamicComboGetListCommandId = new CommandID(GuidList.guidComboBoxCmdSet, (int)PkgCmdIDList.cmdidMyDynamicComboGetList);
+            MenuCommand menuMyDynamicComboGetListCommand = new OleMenuCommand(new EventHandler(OnMenuMyDynamicComboGetList), menuMyDynamicComboGetListCommandId);
+            mcs.AddCommand(menuMyDynamicComboGetListCommand);
         }
 
         #endregion
 
         #region Combo Box Commands
 
-        private string[] _dropDownComboChoices = new string[0];
-        private string[] dropDownComboChoices => InitConfigurations();
+        private readonly string[] _dropDownComboChoices = new string[0];
+        private string[] DropDownComboChoices => InitConfigurations();
 
-        private string _currentDropDownComboChoice = null;
+        private string _currentDropDownComboChoice;
 
-        private string currentDropDownComboChoice
+        private string CurrentDropDownComboChoice
         {
             get => GetCurrentDropDownComboChoice();
             set => _currentDropDownComboChoice = value;
@@ -160,13 +112,15 @@ namespace EES.ComboBox
 
         private string GetCurrentDropDownComboChoice()
         {
-            if (_currentDropDownComboChoice == null)
+            if (_currentDropDownComboChoice != null)
             {
-                InitConfigurations();
-                var cls = new EnvValueService();
-
-                _currentDropDownComboChoice = cls.GetSelectedItem() ?? _dropDownComboChoices.FirstOrDefault() ?? "No config";
+                return _currentDropDownComboChoice;
             }
+
+            InitConfigurations();
+            var envValueService = new EnvValueService();
+
+            _currentDropDownComboChoice = envValueService.GetSelectedItem() ?? _dropDownComboChoices.FirstOrDefault() ?? "No config";
             return _currentDropDownComboChoice;
         }
 
@@ -189,11 +143,12 @@ namespace EES.ComboBox
                 slnFile = dte.Solution.FullName;
             }
 
-            var worker = new PossibleValuesService();
+
             if (string.IsNullOrWhiteSpace(slnFile))
             {
                 return _dropDownComboChoices;
             }
+            var worker = new PossibleValuesService();
             return worker.GetItems(slnFile);
         }
 
@@ -209,7 +164,7 @@ namespace EES.ComboBox
                 if (vOut != IntPtr.Zero)
                 {
                     // when vOut is non-NULL, the IDE is requesting the current value for the combo
-                    Marshal.GetNativeVariantForObject(currentDropDownComboChoice, vOut);
+                    Marshal.GetNativeVariantForObject(CurrentDropDownComboChoice, vOut);
                 }
 
                 else if (newChoice != null)
@@ -217,10 +172,10 @@ namespace EES.ComboBox
                     // new value was selected or typed in
                     // see if it is one of our items
                     bool validInput = false;
-                    int indexInput = -1;
-                    for (indexInput = 0; indexInput < dropDownComboChoices.Length; indexInput++)
+                    int indexInput;
+                    for (indexInput = 0; indexInput < DropDownComboChoices.Length; indexInput++)
                     {
-                        if (string.Compare(dropDownComboChoices[indexInput], newChoice, StringComparison.CurrentCultureIgnoreCase) == 0)
+                        if (string.Compare(DropDownComboChoices[indexInput], newChoice, StringComparison.CurrentCultureIgnoreCase) == 0)
                         {
                             validInput = true;
                             break;
@@ -229,9 +184,9 @@ namespace EES.ComboBox
 
                     if (validInput)
                     {
-                        currentDropDownComboChoice = dropDownComboChoices[indexInput];
+                        CurrentDropDownComboChoice = DropDownComboChoices[indexInput];
 
-                        new EnvValueService().ChangeEnv(currentDropDownComboChoice, ShowMessage);
+                        new EnvValueService().ChangeEnv(CurrentDropDownComboChoice, ShowMessage);
                     }
                     else
                     {
@@ -264,7 +219,7 @@ namespace EES.ComboBox
                 }
                 else if (vOut != IntPtr.Zero)
                 {
-                    Marshal.GetNativeVariantForObject(dropDownComboChoices, vOut);
+                    Marshal.GetNativeVariantForObject(DropDownComboChoices, vOut);
                 }
                 else
                 {
@@ -274,8 +229,8 @@ namespace EES.ComboBox
 
         }
 
-        private string[] indexComboChoices = { Resources.Lions, Resources.Tigers, Resources.Bears };
-        private int currentIndexComboChoice = 0;
+        private readonly string[] _indexComboChoices = { Resources.Lions, Resources.Tigers, Resources.Bears };
+        private int _currentIndexComboChoice;
 
         private void OnMenuMyIndexCombo(object sender, EventArgs e)
         {
@@ -299,18 +254,18 @@ namespace EES.ComboBox
                 if (vOut != IntPtr.Zero)
                 {
                     // when vOut is non-NULL, the IDE is requesting the current value for the combo
-                    Marshal.GetNativeVariantForObject(indexComboChoices[currentIndexComboChoice], vOut);
+                    Marshal.GetNativeVariantForObject(_indexComboChoices[_currentIndexComboChoice], vOut);
                 }
 
                 else if (input != null)
                 {
-                    int newChoice = -1;
+                    int newChoice;
                     if (!int.TryParse(input.ToString(), out newChoice))
                     {
                         // user typed a string argument in command window.
-                        for (int i = 0; i < indexComboChoices.Length; i++)
+                        for (int i = 0; i < _indexComboChoices.Length; i++)
                         {
-                            if (string.Compare(indexComboChoices[i], input.ToString(), StringComparison.CurrentCultureIgnoreCase) == 0)
+                            if (string.Compare(_indexComboChoices[i], input.ToString(), StringComparison.CurrentCultureIgnoreCase) == 0)
                             {
                                 newChoice = i;
                                 break;
@@ -321,8 +276,8 @@ namespace EES.ComboBox
                     // new value was selected or typed in
                     if (newChoice != -1)
                     {
-                        currentIndexComboChoice = newChoice;
-                        ShowMessage(Resources.MyIndexCombo, currentIndexComboChoice.ToString(CultureInfo.CurrentCulture));
+                        _currentIndexComboChoice = newChoice;
+                        ShowMessage(Resources.MyIndexCombo, _currentIndexComboChoice.ToString(CultureInfo.CurrentCulture));
                     }
                     else
                     {
@@ -363,7 +318,7 @@ namespace EES.ComboBox
                 }
                 else if (vOut != IntPtr.Zero)
                 {
-                    Marshal.GetNativeVariantForObject(indexComboChoices, vOut);
+                    Marshal.GetNativeVariantForObject(_indexComboChoices, vOut);
                 }
                 else
                 {
@@ -372,9 +327,9 @@ namespace EES.ComboBox
             }
         }
 
-        private string currentMRUComboChoice = null;
+        private string _currentMruComboChoice;
 
-        private void OnMenuMyMRUCombo(object sender, EventArgs e)
+        private void OnMenuMyMruCombo(object sender, EventArgs e)
         {
             if (e == EventArgs.Empty)
             {
@@ -396,7 +351,7 @@ namespace EES.ComboBox
                 else if (vOut != IntPtr.Zero)
                 {
                     // when vOut is non-NULL, the IDE is requesting the current value for the combo
-                    Marshal.GetNativeVariantForObject(currentMRUComboChoice, vOut);
+                    Marshal.GetNativeVariantForObject(_currentMruComboChoice, vOut);
                 }
 
                 else if (input != null)
@@ -406,8 +361,8 @@ namespace EES.ComboBox
                     // new value was selected or typed in
                     if (!string.IsNullOrEmpty(newChoice))
                     {
-                        currentMRUComboChoice = newChoice;
-                        ShowMessage(Resources.MyMRUCombo, currentMRUComboChoice);
+                        _currentMruComboChoice = newChoice;
+                        ShowMessage(Resources.MyMRUCombo, _currentMruComboChoice);
                     }
                     else
                     {
@@ -427,13 +382,6 @@ namespace EES.ComboBox
             }
         }
 
-        private double[] numericZoomLevels = { 4.0, 3.0, 2.0, 1.5, 1.25, 1.0, .75, .66, .50, .33, .25, .10 };
-        private string zoomToFit = Resources.ZoomToFit;
-        private string zoom_to_Fit = Resources.Zoom_to_Fit;
-        private string[] zoomLevels = null;
-        private NumberFormatInfo numberFormatInfo;
-        private double currentZoomFactor = 1.0;
-
         private void OnMenuMyDynamicCombo(object sender, EventArgs e)
         {
             if ((null == e) || (e == EventArgs.Empty))
@@ -449,6 +397,7 @@ namespace EES.ComboBox
                 object input = eventArgs.InValue;
                 IntPtr vOut = eventArgs.OutValue;
 
+                var envValueService = new EnvValueService();
                 if (vOut != IntPtr.Zero && input != null)
                 {
                     throw (new ArgumentException(Resources.BothInOutParamsIllegal)); // force an exception to be thrown
@@ -456,55 +405,19 @@ namespace EES.ComboBox
                 else if (vOut != IntPtr.Zero)
                 {
                     // when vOut is non-NULL, the IDE is requesting the current value for the combo
-                    if (currentZoomFactor == 0)
-                    {
-                        Marshal.GetNativeVariantForObject(zoom_to_Fit, vOut);
-                    }
-                    else
-                    {
-                        string factorString = currentZoomFactor.ToString("P0", numberFormatInfo);
-                        Marshal.GetNativeVariantForObject(factorString, vOut);
-                    }
+                    
+                    var currentItem = envValueService.GetSelectedItem() ?? "<empty>";
 
+                    Marshal.GetNativeVariantForObject(currentItem, vOut);
                 }
                 else if (input != null)
                 {
                     // new zoom value was selected or typed in
+                    
                     string inputString = input.ToString();
 
-                    if (inputString.Equals(zoomToFit) || inputString.Equals(zoom_to_Fit))
-                    {
-                        currentZoomFactor = 0;
-                        ShowMessage(Resources.MyDynamicCombo, zoom_to_Fit);
-                    }
-                    else
-                    {
-                        // There doesn't appear to be any percent-parsing routines in the framework (even though you can create
-                        // a localized percentage in a string!).  So, we need to remove any occurence of the localized Percent 
-                        // symbol, then parse the value that's left
-                        try
-                        {
-                            float newZoom = Single.Parse(inputString.Replace(NumberFormatInfo.InvariantInfo.PercentSymbol, ""), CultureInfo.CurrentCulture);
-
-                            newZoom = (float)Math.Round(newZoom);
-                            if (newZoom < 0)
-                            {
-                                throw (new ArgumentException(Resources.ZoomMustBeGTZero)); // force an exception to be thrown
-                            }
-
-                            currentZoomFactor = newZoom / (float)100.0;
-
-                            ShowMessage(Resources.MyDynamicCombo, newZoom.ToString(CultureInfo.CurrentCulture));
-                        }
-                        catch (FormatException)
-                        {
-                            // user typed in a non-numeric value, ignore it
-                        }
-                        catch (OverflowException)
-                        {
-                            // user typed in too large of a number, ignore it
-                        }
-                    }
+                    new EnvValueService().ChangeEnv(inputString,ShowMessage);
+                    
                 }
                 else
                 {
@@ -541,24 +454,22 @@ namespace EES.ComboBox
                 else if (vOut != IntPtr.Zero)
                 {
                     // initialize the zoom value array if needed
-                    if (zoomLevels == null)
+                    string slnFile;
+                    DTE2 dte2 = (DTE2)GetGlobalService(typeof(SDTE));
+                    if (dte2 != null)
                     {
-                        numberFormatInfo = (NumberFormatInfo)CultureInfo.CurrentUICulture.NumberFormat.Clone();
-                        if (numberFormatInfo.PercentPositivePattern == 0)
-                            numberFormatInfo.PercentPositivePattern = 1;
-                        if (numberFormatInfo.PercentNegativePattern == 0)
-                            numberFormatInfo.PercentNegativePattern = 1;
-
-                        zoomLevels = new string[numericZoomLevels.Length + 1];
-                        for (int i = 0; i < numericZoomLevels.Length; i++)
-                        {
-                            zoomLevels[i] = numericZoomLevels[i].ToString("P0", numberFormatInfo);
-                        }
-
-                        zoomLevels[zoomLevels.Length - 1] = zoom_to_Fit;
+                        slnFile = dte2.Solution.FullName;
+                    }
+                    else
+                    {
+                        DTE dte = (DTE)GetService(typeof(DTE));
+                        slnFile = dte.Solution.FullName;
                     }
 
-                    Marshal.GetNativeVariantForObject(zoomLevels, vOut);
+                    var worker = new PossibleValuesService();
+                    var items = worker.GetItems(slnFile);
+
+                    Marshal.GetNativeVariantForObject(items, vOut);
                 }
                 else
                 {
