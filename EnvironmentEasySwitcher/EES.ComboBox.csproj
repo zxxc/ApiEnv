@@ -70,7 +70,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EnvValueService.cs" />
     <Compile Include="Services\ManualAssemblyResolver.cs" />
-    <Compile Include="Services\PossibleValuesService.cs" />
+    <Compile Include="Services\PossibleValuesProvider.cs" />
     <Compile Include="Services\TestRunnersService.cs" />
     <Compile Include="VsPkg.cs" />
   </ItemGroup>
@@ -86,7 +86,6 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".pkgdef" />
     <Content Include="EES.ComboBox.pkgdef" />
     <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

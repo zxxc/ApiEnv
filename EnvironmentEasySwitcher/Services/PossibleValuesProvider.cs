@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EES.ComboBox.Services
 {
-    public class PossibleValuesService
+    public class PossibleValuesProvider
     {
         public const string DefaultItemName = "TestSettings";
 

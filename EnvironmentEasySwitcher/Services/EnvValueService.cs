@@ -15,7 +15,7 @@ namespace EES.ComboBox.Services
         {
             string runners = new TestRunnersService().KillTestRunners();
 
-            String envValue = currentDropDownComboChoice == PossibleValuesService.DefaultItemName 
+            String envValue = currentDropDownComboChoice == PossibleValuesProvider.DefaultItemName 
                 ? String.Empty 
                 : currentDropDownComboChoice;
 
