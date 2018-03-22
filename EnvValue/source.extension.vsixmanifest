@@ -6,7 +6,7 @@
         <DisplayName>EnvValue selector</DisplayName>
         <Description xml:space="preserve">EnvValue selector</Description>
         <MoreInfo>https://github.com/zxxc/EnvValue</MoreInfo>
-        <License>LICENSE</License>
+        <License>LICENSE.txt</License>
     </Metadata>
     <Installation InstalledByMsi="false">
         <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0,16.0)" />

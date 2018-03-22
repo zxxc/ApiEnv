@@ -5,7 +5,7 @@ namespace EES.ComboBox.Services
     public class EnvValueService
     {
         const String EnvName = "EnvTest";
-        const EnvironmentVariableTarget EnvironmentVariableTarget = System.EnvironmentVariableTarget.Machine;
+        const EnvironmentVariableTarget EnvironmentVariableTarget = System.EnvironmentVariableTarget.Process;
         public string GetSelectedItem()
         {
             return Environment.GetEnvironmentVariable(EnvName, EnvironmentVariableTarget);
