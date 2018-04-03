@@ -174,12 +174,12 @@
         <CommandFlag>IconAndText</CommandFlag>
         <CommandFlag>CommandWellOnly</CommandFlag>
         <Strings>
-          <ButtonText>Dynamic: </ButtonText>
-          <MenuText>Dynamic Combo: </MenuText>
-          <ToolTipText>Enter Zoom Level</ToolTipText>
-          <CanonicalName>Dynamic Combo</CanonicalName>
-          <LocCanonicalName>Dynamic Combo</LocCanonicalName>
-          <CommandName>Dynamic Combo</CommandName>
+          <ButtonText>Env: </ButtonText>
+          <MenuText>Env value: </MenuText>
+          <ToolTipText>Enter Env value</ToolTipText>
+          <CanonicalName>Env value</CanonicalName>
+          <LocCanonicalName>Env value</LocCanonicalName>
+          <CommandName>Env value</CommandName>
         </Strings>
       </Combo>
     </Combos>
