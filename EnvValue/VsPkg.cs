@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using EES.ComboBox.Services;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.Samples.VisualStudio.IDE.OptionsPage;
 
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "EES.ComboBox")]
 namespace EES.ComboBox
@@ -26,6 +27,9 @@ namespace EES.ComboBox
     // This attribute registers a tool window exposed by this package.
     [Guid(GuidList.guidComboBoxPkgString)]
     [ProvideBindingPath]
+
+    [ProvideOptionPageAttribute(typeof(OptionsPageGeneral), "Env Value", "General", 100, 101, true, new string[] { "Env Value dropdown items" })]
+    [ProvideProfileAttribute(typeof(OptionsPageGeneral), "Env Value", "General Options", 100, 101, true, DescriptionResourceID = 100)]
     public sealed class ComboBoxPackage : Package
     {
         /// <summary>

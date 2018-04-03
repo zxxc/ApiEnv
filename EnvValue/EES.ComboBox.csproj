@@ -61,6 +61,9 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Guids.cs" />
+    <Compile Include="OptionsUI\OptionsPageGeneral.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PkgCmdID.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -92,7 +95,6 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="app.config" />
-    <None Include="LICENSE" />
     <None Include="packages.config" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
@@ -238,6 +240,7 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.15.6.46\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>

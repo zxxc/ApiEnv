@@ -1,14 +1,4 @@
-﻿/***************************************************************************
- 
-Copyright (c) Microsoft Corporation. All rights reserved.
-THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-
-***************************************************************************/
-
-using System;
+﻿using System;
 
 namespace EES.ComboBox
 {
@@ -20,5 +10,8 @@ namespace EES.ComboBox
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         public static readonly Guid guidComboBoxPkg = new Guid(guidComboBoxPkgString);
         public static readonly Guid guidComboBoxCmdSet = new Guid(guidComboBoxCmdSetString);
+
+
+        public const string OptionsPageGeneral = "648D7F79-447D-4979-BD39-371903EAF9EA";
     };
 }
