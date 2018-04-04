@@ -18,3 +18,4 @@ This extension will show list:
 - dev
 
 By selecting line we will change environment variable `EnvTest` to selected value. And kill test settings executors like mstest, xunit, vstest
+![Env value settings](ReadmeImg.png?raw=true "Env value settings")
