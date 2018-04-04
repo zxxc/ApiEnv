@@ -8,7 +8,7 @@ namespace EES.ComboBox.Services
     {
         readonly HashSet<string> _testRunners = new HashSet<string>
         {
-            "vstest","mstest","xunit"
+            "vstest","mstest","xunit","nunit"
         };
 
         public string KillTestRunners()

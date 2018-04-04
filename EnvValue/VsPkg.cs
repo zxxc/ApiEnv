@@ -2,13 +2,17 @@
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
+using EES.ComboBox.OptionsUI;
 using EES.ComboBox.Services;
 using EnvDTE;
 using EnvDTE80;
-using Microsoft.Samples.VisualStudio.IDE.OptionsPage;
+using Microsoft.VisualStudio.Settings;
+using Microsoft.VisualStudio.Shell.Settings;
 
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "EES.ComboBox")]
 namespace EES.ComboBox
@@ -73,7 +77,7 @@ namespace EES.ComboBox
         }
 
         #endregion
-        
+
         private void OnMenuMyDynamicCombo(object sender, EventArgs e)
         {
             if (null == e || e == EventArgs.Empty)
@@ -91,7 +95,12 @@ namespace EES.ComboBox
             object input = eventArgs.InValue;
             IntPtr vOut = eventArgs.OutValue;
 
-            var envValueService = new EnvValueService();
+
+            DTE2 dte2 = (DTE2)GetGlobalService(typeof(SDTE));
+            var a2 = dte2.Properties["Env Value", "General"];
+            var envParamKey = a2.Item(nameof(OptionsPageGeneral.EnvParamKey)).Value as string;
+
+            var envValueService = new EnvValueService(envParamKey);
             if (vOut != IntPtr.Zero && input != null)
             {
                 throw new ArgumentException(Resources.BothInOutParamsIllegal); // force an exception to be thrown
@@ -101,17 +110,15 @@ namespace EES.ComboBox
             {
                 // when vOut is non-NULL, the IDE is requesting the current value for the combo
 
-                var currentItem = envValueService.GetSelectedItem() ?? "<empty>";
+                var currentItem = envValueService.GetSelectedItem() ?? EnvValueService.Empty;
 
                 Marshal.GetNativeVariantForObject(currentItem, vOut);
             }
             else if (input != null)
             {
-                // new zoom value was selected or typed in
-
                 string inputString = input.ToString();
 
-                new EnvValueService().ChangeEnv(inputString, ShowMessage);
+                envValueService.ChangeEnv(inputString, ShowMessage);
             }
             else
             {
@@ -146,9 +153,14 @@ namespace EES.ComboBox
                 //get solution file name
                 string slnFile;
                 DTE2 dte2 = (DTE2)GetGlobalService(typeof(SDTE));
+                string[] items = new string[0];
+                string searchPattern=string.Empty;
                 if (dte2 != null)
                 {
                     slnFile = dte2.Solution.FullName;
+                    var a2 = dte2.Properties["Env Value", "General"];
+                    items = a2.Item( nameof(OptionsPageGeneral.SavedEnvValues)).Value as string[];
+                    searchPattern = a2.Item(nameof(OptionsPageGeneral.SearchPattern)).Value as string;
                 }
                 else
                 {
@@ -156,16 +168,23 @@ namespace EES.ComboBox
                     slnFile = dte.Solution.FullName;
                 }
 
-                //get possible values for env value
 
-                var worker = new PossibleValuesProvider();
-                var items = worker.GetItems(slnFile);
+                if (items == null)
+                {
+                    items = new string[0];
+                }
+                
+                
+                var worker = new PossibleValuesProvider(searchPattern);
+
+                items = items.Concat(worker.GetItems(slnFile)).ToArray();
+                
 
                 Marshal.GetNativeVariantForObject(items, vOut);
             }
             else
             {
-                throw new ArgumentException(Resources.OutParamRequired); 
+                throw new ArgumentException(Resources.OutParamRequired);
             }
         }
 

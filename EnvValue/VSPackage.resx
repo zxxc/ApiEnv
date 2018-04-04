@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="100" xml:space="preserve">
-    <value>Env Value100</value>
+    <value>Env Value</value>
   </data>
   <data name="102" xml:space="preserve">
     <value>Env Value102</value>
